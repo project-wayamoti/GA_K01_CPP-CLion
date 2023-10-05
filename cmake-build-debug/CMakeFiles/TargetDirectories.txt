@@ -1,0 +1,3 @@
+C:/Users/waya/CLionProjects/GA-K01/cmake-build-debug/CMakeFiles/GA_K01.dir
+C:/Users/waya/CLionProjects/GA-K01/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/waya/CLionProjects/GA-K01/cmake-build-debug/CMakeFiles/rebuild_cache.dir
