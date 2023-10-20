@@ -1,5 +1,4 @@
 add_executable(main main.cpp utils.h)
-#add_executable(main PointPovotTurn.cpp First.h)
 
 # 以下でDXライブラリをinclude, linkします
 # 注意：この例ではDXライブラリの「３Ｄモデル機能＆ソフトウエアレンダリング機能無しパッケージ」を使用していますが、
