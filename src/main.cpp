@@ -1,9 +1,17 @@
-// 以下の行がないとコンパイルが通りません
-#pragma comment(linker, "/subsystem:windows")
-#include "utils.h"
+// Program     : 三角形の回転と当たり判定
+// Author      : KASHIWAYA Rikuto (waya0125@wayamoti2015)
+// Created     : 2023/10/21
+// Updated     : 2023/10/21
+// Description : 三角形を回転させて当たり判定と当たった部分を基準とした回転を行うプログラム
+// URL         : https://github.com/project-wayamoti/GA_K01_CPP-Clion/
 
 //## 環境に応じて設定
+#pragma comment(linker, "/subsystem:windows") // CLionで動かす際、このコードがないとコンパイルが通らない
+#include "triangle.h" // 三角形クラスヘッダー + ベクトルクラスヘッダー + ユーティリティヘッダー
 using namespace std;
+
+//## 変数
+float floatRotateOrientation = 0.0; // 回転方向 0.1 = 右, -0.1 = 左
 
 // プログラムの最初はWinMainで始める
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
