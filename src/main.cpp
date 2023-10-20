@@ -68,11 +68,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             DrawCircle((int)i.x, (int)i.y, 5, white, true);
         }
 
-        CenterPos = triangle.Hit(CenterPos, LinePosLeft, LinePosRight);
+        // OŠpŒ`‚Ì•`‰æ
+        DrawTriangle((int)circleMAN.pos[0].x, (int)circleMAN.pos[0].y, (int)circleMAN.pos[1].x, (int)circleMAN.pos[1].y, (int)circleMAN.pos[2].x, (int)circleMAN.pos[2].y, white, false);
 
-        DrawTriangle(triangle.pos[0].x, triangle.pos[0].y, triangle.pos[1].x, triangle.pos[1].y, triangle.pos[2].x, triangle.pos[2].y, white, true);
-        DrawCircle(CenterPos.x, CenterPos.y, 5, white, true);
-        DrawLine(LinePosLeft.x, LinePosLeft.y, LinePosRight.x, LinePosRight.y, white);
+        // ‰ñ“]’†S•”‚Ì•`‰æ
+        DrawCircle((int)circleCentralPos.x, (int)circleCentralPos.y, 5, red, true);
+
+        // Šî€ü‚Ì•`‰æ
+        DrawLine((int)linesPosLeft.X(), (int)linesPosLeft.Y(), (int)linesPosRight.X(), (int)linesPosRight.Y(), white);
 
         // ‰æ–Ê‚ÌXVi•K{j
         ScreenFlip(); // ‰æ–Ê‚ğ”½“]‚³‚¹‚éˆ—
