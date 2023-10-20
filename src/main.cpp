@@ -12,15 +12,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SetGraphMode(WIDTH, HEIGHT, 32); // 画面サイズ設定
     SetWaitVSyncFlag(TRUE); // 垂直同期を有効にする
 
-    unsigned int white = GetColor(255,255,255);
+    unsigned int white = GetColor(255, 255, 255);
+    unsigned int red = GetColor(255, 0, 0);
 
-    //int LinePosX = 0, LinePosY = 480;
-    VECTOR CenterPos = VGet(WIDTH / 2, HEIGHT / 2, 0);
-    VECTOR LinePosLeft = VGet(0, HEIGHT / 2, 0);
-    VECTOR LinePosRight = VGet(WIDTH, HEIGHT / 2, 0);
+    Vector2 circleCentralPos = Vector2(WIDTH / 2, HEIGHT / 2); // 中心座標
+    Vector2 linesPosLeft = Vector2(0, HEIGHT / 2);             // 基準線の左座標
+    Vector2 linesPosRight = Vector2(WIDTH, HEIGHT / 2);        // 基準線の右座標
 
-    // 三角形の頂点
-    Triangle triangle(VGet(500, 500, 0), VGet(600,650, 0), VGet(700, 600, 0));
+    // 円の頂点座標
+    CircleClass circleMAN = {
+        Vector2(400, 250),
+        Vector2(600, 250),
+        Vector2(500, 200)
+    };
 
     // DXライブラリ初期化処理
     if (DxLib_Init() == -1) {
@@ -31,7 +35,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     while (ProcessMessage() == 0) {
         ClearDrawScreen(); // 画面の更新
 
-        printfDx("Hello World!");
         if (CheckHitKey(KEY_INPUT_A) == 1) floatRotateOrientation = -0.1; // Aキーが押されたら左回転
         if (CheckHitKey(KEY_INPUT_D) == 1) floatRotateOrientation = 0.1;  // Dキーが押されたら右回転
 
@@ -40,6 +43,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             circleMAN.Rotate (circleCentralPos, floatRotateOrientation);
         }
 
+        // 回転後に回転方向をリセット
+        floatRotateOrientation = 0.0;
+
+        // 三角形の当たり判定 & 中心座標の更新
+        circleCentralPos = circleMAN.Hit(
+            circleCentralPos,
+            linesPosLeft,
+            linesPosRight
+        );
+
+        // 三角の頂点描画 頂点分だけ回す
+        for (auto & i : circleMAN.pos) {
+            // 三角形の頂点の描画
+            DrawCircle((int)i.x, (int)i.y, 5, white, true);
         }
 
         CenterPos = triangle.Hit(CenterPos, LinePosLeft, LinePosRight);
