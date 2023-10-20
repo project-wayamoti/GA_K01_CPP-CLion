@@ -1,16 +1,16 @@
-// ä»¥ä¸‹ã®è¡ŒãŒãªã„ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãŒé€šã‚Šã¾ã›ã‚“
+// ˆÈ‰º‚Ìs‚ª‚È‚¢‚ÆƒRƒ“ƒpƒCƒ‹‚ª’Ê‚è‚Ü‚¹‚ñ
 #pragma comment(linker, "/subsystem:windows")
 #include "utils.h"
 
-//## ç’°å¢ƒã«å¿œã˜ã¦è¨­å®š
+//## ŠÂ‹«‚É‰‚¶‚Äİ’è
 using namespace std;
 
-// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®æœ€åˆã¯WinMainã§å§‹ã‚ã‚‹
+// ƒvƒƒOƒ‰ƒ€‚ÌÅ‰‚ÍWinMain‚Ån‚ß‚é
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-    //##### åˆæœŸè¨­å®š #####//
-    ChangeWindowMode(TRUE); // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰è¨­å®š
-    SetGraphMode(WIDTH, HEIGHT, 32); // ç”»é¢ã‚µã‚¤ã‚ºè¨­å®š
-    SetWaitVSyncFlag(TRUE); // å‚ç›´åŒæœŸã‚’æœ‰åŠ¹ã«ã™ã‚‹
+    //##### ‰Šúİ’è #####//
+    ChangeWindowMode(TRUE); // ƒEƒBƒ“ƒhƒEƒ‚[ƒhİ’è
+    SetGraphMode(WIDTH, HEIGHT, 32); // ‰æ–ÊƒTƒCƒYİ’è
+    SetWaitVSyncFlag(TRUE); // ‚’¼“¯Šú‚ğ—LŒø‚É‚·‚é
 
     unsigned int white = GetColor(255,255,255);
 
@@ -19,30 +19,27 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     VECTOR LinePosLeft = VGet(0, HEIGHT / 2, 0);
     VECTOR LinePosRight = VGet(WIDTH, HEIGHT / 2, 0);
 
-    // ä¸‰è§’å½¢ã®é ‚ç‚¹
+    // OŠpŒ`‚Ì’¸“_
     Triangle triangle(VGet(500, 500, 0), VGet(600,650, 0), VGet(700, 600, 0));
 
-    // DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
+    // DXƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
     if (DxLib_Init() == -1) {
-        return -1; // ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã‚‰ç›´ã¡ã«çµ‚äº†
+        return -1; // ƒGƒ‰[‚ª‹N‚«‚½‚ç’¼‚¿‚ÉI—¹
     }
 
-    //##### ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—ï¼ˆæç”»å‡¦ç†ï¼‰ #####//
+    //##### ƒƒCƒ“ƒ‹[ƒvi•`‰æˆ—j #####//
     while (ProcessMessage() == 0) {
-        ClearDrawScreen(); // ç”»é¢ã®æ›´æ–°
+        ClearDrawScreen(); // ‰æ–Ê‚ÌXV
 
         printfDx("Hello World!");
+        if (CheckHitKey(KEY_INPUT_A) == 1) floatRotateOrientation = -0.1; // AƒL[‚ª‰Ÿ‚³‚ê‚½‚ç¶‰ñ“]
+        if (CheckHitKey(KEY_INPUT_D) == 1) floatRotateOrientation = 0.1;  // DƒL[‚ª‰Ÿ‚³‚ê‚½‚ç‰E‰ñ“]
 
-        if (CheckHitKey(KEY_INPUT_A) == 1) {
-            printfDx("A");
-            triangle.turn = -0.1;
-            triangle.Turn(CenterPos);
+        // AƒL[ADƒL[‚Ì‚¢‚¸‚ê‚©‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çã‚Åİ’è‚³‚ê‚½’l‚ğg‚Á‚Ä‰ñ“]
+        if (CheckHitKey(KEY_INPUT_A) == 1 || CheckHitKey(KEY_INPUT_D) == 1) {
+            circleMAN.Rotate (circleCentralPos, floatRotateOrientation);
         }
 
-        if (CheckHitKey(KEY_INPUT_D) == 1) {
-            printfDx("D");
-            triangle.turn = 0.1;
-            triangle.Turn(CenterPos);
         }
 
         CenterPos = triangle.Hit(CenterPos, LinePosLeft, LinePosRight);
@@ -51,11 +48,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         DrawCircle(CenterPos.x, CenterPos.y, 5, white, true);
         DrawLine(LinePosLeft.x, LinePosLeft.y, LinePosRight.x, LinePosRight.y, white);
 
-        // ç”»é¢ã®æ›´æ–°ï¼ˆå¿…é ˆï¼‰
-        ScreenFlip(); // ç”»é¢ã‚’åè»¢ã•ã›ã‚‹å‡¦ç†
-        clsDx();      // ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°ç”»é¢ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹å‡¦ç†
+        // ‰æ–Ê‚ÌXVi•K{j
+        ScreenFlip(); // ‰æ–Ê‚ğ”½“]‚³‚¹‚éˆ—
+        clsDx();      // ƒfƒoƒbƒOƒƒO‰æ–Ê‚ğƒNƒŠƒA‚·‚éˆ—
     }
 
-    DxLib_End(); // DX Libraryã®ä½¿ç”¨ã‚’çµ‚äº†ã™ã‚‹å‡¦ç†
-    return 0;    // ã‚½ãƒ•ãƒˆã‚’æ­£å¸¸çµ‚äº†
+    DxLib_End(); // DX Library‚Ìg—p‚ğI—¹‚·‚éˆ—
+    return 0;    // ƒ\ƒtƒg‚ğ³íI—¹
 }
