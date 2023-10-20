@@ -42,6 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //##### メインループ（描画処理） #####//
     while (ProcessMessage() == 0) {
         ClearDrawScreen(); // 画面の更新
+        printfDx("Hello World! "); // なんとなく残ってるけど意味はない
 
         if (CheckHitKey(KEY_INPUT_A) == 1) floatRotateOrientation = -0.1; // Aキーが押されたら左回転
         if (CheckHitKey(KEY_INPUT_D) == 1) floatRotateOrientation = 0.1;  // Dキーが押されたら右回転
