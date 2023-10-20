@@ -34,10 +34,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         Vector2(500, 200)
     };
 
-    // DXライブラリ初期化処理
-    if (DxLib_Init() == -1) {
-        return -1; // エラーが起きたら直ちに終了
-    }
+    // ################################################################################
+
+    // DXライブラリ初期化処理でエラーが起きたら終了
+    if (DxLib_Init() == -1) return -1;
 
     //##### メインループ（描画処理） #####//
     while (ProcessMessage() == 0) {
